@@ -1,0 +1,16 @@
+{
+  "name": "skyro-loan-app",
+  "version": "1.0.0",
+  "description": "Skyro credit-line loan product prototype",
+  "scripts": {
+    "dev": "concurrently --names \"API,UI\" --prefix-colors \"blue,green\" \"node backend/index.js\" \"npm --prefix frontend run dev\"",
+    "seed": "node backend/seed.js",
+    "start": "node backend/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
