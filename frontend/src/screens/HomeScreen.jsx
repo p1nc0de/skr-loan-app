@@ -5,6 +5,8 @@ import { CUSTOMER_ID } from '../App';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AmountDisplay, { fmtMYR } from '../components/AmountDisplay';
 
+const ORIGINATION_FEE_PCT = 0.02;
+
 export default function HomeScreen() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,10 @@ export default function HomeScreen() {
 
   if (loading) return <div className="screen"><LoadingSpinner /></div>;
   if (!data) return <div className="screen"><div className="p-20 text-secondary">Failed to load account.</div></div>;
+
+  const outstandingCents = data.approved_limit_cents - data.available_cents;
+  const refuelGrossCents = Math.ceil(outstandingCents / (1 - ORIGINATION_FEE_PCT));
+  const refuelNetCents = refuelGrossCents - Math.round(refuelGrossCents * ORIGINATION_FEE_PCT);
 
   return (
     <div className="screen">
@@ -54,7 +60,7 @@ export default function HomeScreen() {
           {/* Credit utilization progress bar */}
           {(() => {
             const usedPct = data.approved_limit_cents > 0
-              ? Math.min(100, (data.outstanding_cents / data.approved_limit_cents) * 100)
+              ? Math.min(100, (outstandingCents / data.approved_limit_cents) * 100)
               : 0;
             return (
               <div>
@@ -119,7 +125,7 @@ export default function HomeScreen() {
         >
           <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(data.approved_limit_cents - data.available_cents)}</span>
+            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(refuelNetCents)}</span>
             <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
           </div>
         </button>
