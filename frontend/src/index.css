@@ -21,7 +21,7 @@
   --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
   --shadow-lg:     0 8px 32px rgba(96, 165, 250, 0.20);
   --nav-height:    72px;
-  --font:          'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font:          var(--family-body);
 }
 
 *, *::before, *::after {

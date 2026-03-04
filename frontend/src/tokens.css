@@ -4,6 +4,12 @@
    Base black confirmed as rgb(15,15,15) from fade values in source.
    ================================================================ */
 
+/* === TYPOGRAPHY === */
+:root {
+  --family-body:  "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --family-title: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* === PRIMITIVES === */
 :root {
   /* Base */
@@ -157,50 +163,4 @@
   --foreground-dynamic-separator:        var(--black-transperent-200);
 }
 
-/* === SEMANTIC TOKENS — DARK === */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-dynamic-base-ios:          #000000;
-    --background-dynamic-base-android-web:  var(--base-black);
-    --background-dynamic-elevation-1:       var(--neutral-900);
-    --background-dynamic-elevation-2:       var(--neutral-800);
-    --background-dynamic-elevation-3:       var(--neutral-700);
-    --background-dynamic-opposite:          var(--base-white);
-    --background-dynamic-neutral-1:         var(--white-transperent-200);
-    --background-dynamic-neutral-2:         var(--white-transperent-300);
-    --background-dynamic-neutral-3:         var(--white-transperent-400);
-    --background-dynamic-neutral-4:         var(--white-transperent-500);
-    --background-dynamic-neutral-1-opaque:  var(--neutral-800);
-    --background-dynamic-highlight:         var(--white-transperent-200);
-    --background-dynamic-warning:           rgba(252, 211, 77, 0.25);
-    --background-dynamic-positive:          rgba(22, 163, 74, 0.32);
-    --background-dynamic-negative:          rgba(220, 38, 38, 0.30);
-    --background-dynamic-info:             rgba(91, 166, 253, 0.24);
-    --background-dynamic-accent:            var(--blue-400);
-    --background-dynamic-accent-hover:      var(--blue-500);
-    --background-dynamic-accent-pressed:    var(--blue-600);
-    --background-dynamic-notification:      var(--red-600);
-    --background-dynamic-base-gray:         var(--base-black);
-    --background-dynamic-appbar-bg-ksa:     var(--blue-950);
-
-    --text-dynamic-primary:           var(--white-transperent-950);
-    --text-dynamic-secondary:         var(--white-transperent-600);
-    --text-dynamic-tertiary:          var(--white-transperent-400);
-    --text-dynamic-accent:            var(--blue-400);
-    --text-dynamic-accent-pressed:    var(--blue-500);
-    --text-dynamic-positive:          var(--green-500);
-    --text-dynamic-negative:          var(--red-600);
-    --text-dynamic-warning:           var(--amber-400);
-    --text-dynamic-primary-on-opposite: var(--base-black);
-    --text-dynamic-primary-fade:      rgba(255, 255, 255, 0.00);
-    --text-dynamic-secondary-fade:    rgba(255, 255, 255, 0.00);
-
-    --foreground-dynamic-neutral-accent:  var(--white-transperent-600);
-    --foreground-dynamic-positive-accent: var(--green-600);
-    --foreground-dynamic-warning-accent:  var(--amber-400);
-    --foreground-dynamic-negative-accent: var(--red-600);
-    --foreground-dynamic-info-accent:     var(--blue-400);
-    --foreground-dynamic-skeleton:        var(--white-transperent-200);
-    --foreground-dynamic-separator:       var(--white-transperent-400);
-  }
-}
+/* Dark mode intentionally omitted — light mode only. */
