@@ -1,25 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { CUSTOMER_ID } from '../App';
+import { CUSTOMER_ID, ACCOUNT_ID } from '../App';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AmountDisplay, { fmtMYR } from '../components/AmountDisplay';
 
 export default function HomeScreen() {
   const [data, setData] = useState(null);
+  const [tranche, setTranche] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.getAccount(CUSTOMER_ID)
-      .then(setData)
-      .finally(() => setLoading(false));
+    Promise.all([
+      api.getAccount(CUSTOMER_ID),
+      api.getActiveTranche(ACCOUNT_ID),
+    ]).then(([account, activeTranche]) => {
+      setData(account);
+      setTranche(activeTranche);
+    }).finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="screen"><LoadingSpinner /></div>;
   if (!data) return <div className="screen"><div className="p-20 text-secondary">Failed to load account.</div></div>;
 
   const outstandingCents = data.approved_limit_cents - data.available_cents;
+  const availableToRefuelCents = tranche
+    ? tranche.schedules.filter(s => s.paid).reduce((sum, s) => sum + s.principal_cents, 0)
+    : 0;
 
   return (
     <div className="screen">
@@ -121,7 +129,7 @@ export default function HomeScreen() {
         >
           <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(data.available_cents)}</span>
+            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(availableToRefuelCents)}</span>
             <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
           </div>
         </button>
