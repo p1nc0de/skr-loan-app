@@ -8,6 +8,7 @@ import AmountDisplay, { fmtMYR } from '../components/AmountDisplay';
 export default function HomeScreen() {
   const [data, setData] = useState(null);
   const [tranche, setTranche] = useState(null);
+  const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -15,9 +16,11 @@ export default function HomeScreen() {
     Promise.all([
       api.getAccount(CUSTOMER_ID),
       api.getActiveTranche(ACCOUNT_ID),
-    ]).then(([account, activeTranche]) => {
+      api.getWallet(CUSTOMER_ID),
+    ]).then(([account, activeTranche, walletData]) => {
       setData(account);
       setTranche(activeTranche);
+      setWallet(walletData);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -28,6 +31,7 @@ export default function HomeScreen() {
   const availableToRefuelCents = tranche
     ? tranche.schedules.filter(s => s.paid).reduce((sum, s) => sum + s.principal_cents, 0)
     : 0;
+  const walletBalanceCents = wallet ? wallet.balance_cents : 0;
 
   return (
     <div className="screen">
@@ -50,16 +54,42 @@ export default function HomeScreen() {
       {/* Credit Card */}
       <div style={{ padding: '16px 20px' }}>
         <div className="credit-card">
-          {/* Available — hero number */}
-          <div style={{ marginBottom: 24 }}>
-            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 2 }}>Available</p>
+          {/* Available cash — hero number */}
+          <div style={{ marginBottom: 20 }}>
+            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 2 }}>Available Cash</p>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
               <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.75, marginTop: 10, lineHeight: 1 }}>MYR</span>
               <span style={{ fontSize: 52, fontWeight: 800, letterSpacing: '-2px', lineHeight: 1 }}>
-                {fmtMYR(data.available_cents)}
+                {fmtMYR(walletBalanceCents)}
               </span>
             </div>
           </div>
+
+          {/* Refuel Now button */}
+          <button
+            onClick={() => navigate('/refuel')}
+            style={{
+              width: '100%',
+              background: 'rgba(255,255,255,0.18)',
+              border: '1px solid rgba(255,255,255,0.35)',
+              borderRadius: 10,
+              padding: '11px 14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              marginBottom: 20,
+              transition: 'background 0.15s',
+            }}
+            onMouseDown={e => e.currentTarget.style.background = 'rgba(255,255,255,0.28)'}
+            onMouseUp={e => e.currentTarget.style.background = 'rgba(255,255,255,0.18)'}
+          >
+            <span style={{ color: 'white', fontSize: 15, fontWeight: 700 }}>⚡ Refuel Now</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ color: 'white', fontSize: 12, opacity: 0.7, fontWeight: 600 }}>up to MYR {fmtMYR(availableToRefuelCents)}</span>
+              <span style={{ color: 'white', opacity: 0.6, fontSize: 16 }}>→</span>
+            </div>
+          </button>
 
           {/* Credit utilization progress bar */}
           {(() => {
@@ -109,31 +139,6 @@ export default function HomeScreen() {
 
       {/* Actions */}
       <div style={{ padding: '12px 20px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {/* Refuel — primary CTA */}
-        <button
-          onClick={() => navigate('/refuel')}
-          style={{
-            width: '100%',
-            background: 'var(--text-primary)',
-            border: 'none',
-            borderRadius: 14,
-            padding: '16px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-            transition: 'opacity 0.15s',
-          }}
-          onMouseDown={e => e.currentTarget.style.opacity = '0.85'}
-          onMouseUp={e => e.currentTarget.style.opacity = '1'}
-        >
-          <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(availableToRefuelCents)}</span>
-            <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
-          </div>
-        </button>
-
         {/* Pay + Statements */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <button className="quick-action" onClick={() => navigate('/payment')}>
