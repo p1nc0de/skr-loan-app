@@ -1,5 +1,7 @@
 node_modules/
 frontend/node_modules/
 skyro.db
+skyro.db-shm
+skyro.db-wal
 .DS_Store
 dist/
