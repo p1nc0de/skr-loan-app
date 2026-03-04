@@ -51,11 +51,29 @@ export default function HomeScreen() {
             </div>
           </div>
 
-          {/* Outstanding row */}
-          <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontSize: 11, opacity: 0.7, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Outstanding</p>
-            <p style={{ fontSize: 16, fontWeight: 700 }}>MYR {fmtMYR(data.outstanding_cents)}</p>
-          </div>
+          {/* Credit utilization progress bar */}
+          {(() => {
+            const usedPct = data.approved_limit_cents > 0
+              ? Math.min(100, (data.outstanding_cents / data.approved_limit_cents) * 100)
+              : 0;
+            return (
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, opacity: 0.7 }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Used</span>
+                  <span style={{ fontSize: 11, fontWeight: 600 }}>MYR {fmtMYR(data.approved_limit_cents)} limit</span>
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: 100, height: 6, overflow: 'hidden' }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${usedPct}%`,
+                    background: usedPct > 80 ? '#FF6B6B' : 'rgba(255,255,255,0.85)',
+                    borderRadius: 100,
+                    transition: 'width 0.5s ease',
+                  }} />
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
@@ -100,7 +118,10 @@ export default function HomeScreen() {
           onMouseUp={e => e.currentTarget.style.opacity = '1'}
         >
           <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
-          <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(data.available_cents)}</span>
+            <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
+          </div>
         </button>
 
         {/* Pay + Statements */}
