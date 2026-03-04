@@ -66,8 +66,8 @@ const seed = db.transaction(() => {
   insertPayment.run(accountId, t3Id, t3Schedule[1].total_cents, 'INSTALLMENT', '2026-02-10');
   insertPayment.run(accountId, t3Id, t3Schedule[2].total_cents, 'INSTALLMENT', '2026-03-01');
 
-  // Wallet: 45,000 cents balance
-  const walletResult = insertWallet.run(customerId, 45000);
+  // Wallet: 400,000 cents = MYR 4,000 starting balance
+  const walletResult = insertWallet.run(customerId, 400000);
   const walletId = walletResult.lastInsertRowid;
 
   // Wallet ledger entries

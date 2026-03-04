@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { CUSTOMER_ID, ACCOUNT_ID } from '../App';
+import { CUSTOMER_ID } from '../App';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AmountDisplay, { fmtMYR } from '../components/AmountDisplay';
 
 export default function HomeScreen() {
   const [data, setData] = useState(null);
-  const [tranche, setTranche] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -15,11 +14,9 @@ export default function HomeScreen() {
   useEffect(() => {
     Promise.all([
       api.getAccount(CUSTOMER_ID),
-      api.getActiveTranche(ACCOUNT_ID),
       api.getWallet(CUSTOMER_ID),
-    ]).then(([account, activeTranche, walletData]) => {
+    ]).then(([account, walletData]) => {
       setData(account);
-      setTranche(activeTranche);
       setWallet(walletData);
     }).finally(() => setLoading(false));
   }, []);
@@ -28,9 +25,12 @@ export default function HomeScreen() {
   if (!data) return <div className="screen"><div className="p-20 text-secondary">Failed to load account.</div></div>;
 
   const outstandingCents = data.approved_limit_cents - data.available_cents;
-  const availableToRefuelCents = tranche
-    ? tranche.schedules.filter(s => s.paid).reduce((sum, s) => sum + s.principal_cents, 0)
-    : 0;
+  const ORIGINATION_FEE_PCT = 0.02;
+  const refuelGrossCents = Math.ceil(outstandingCents / (1 - ORIGINATION_FEE_PCT));
+  const availableToRefuelCents = Math.min(
+    refuelGrossCents - Math.round(refuelGrossCents * ORIGINATION_FEE_PCT),
+    data.approved_limit_cents,
+  );
   const walletBalanceCents = wallet ? wallet.balance_cents : 0;
 
   return (
