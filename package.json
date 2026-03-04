@@ -4,8 +4,9 @@
   "description": "Skyro credit-line loan product prototype",
   "scripts": {
     "dev": "concurrently --names \"API,UI\" --prefix-colors \"blue,green\" \"node backend/index.js\" \"npm --prefix frontend run dev\"",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "seed": "node backend/seed.js",
-    "start": "node backend/index.js"
+    "start": "node backend/seed.js && NODE_ENV=production node backend/index.js"
   },
   "dependencies": {
     "better-sqlite3": "^9.4.3",
