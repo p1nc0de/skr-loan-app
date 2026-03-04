@@ -1,24 +1,27 @@
+@import './tokens.css';
+
 :root {
-  --primary: #4F46E5;
-  --primary-light: #6366F1;
-  --primary-dark: #3730A3;
-  --accent: #06B6D4;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-  --bg: #F8FAFC;
-  --surface: #FFFFFF;
-  --surface-2: #F1F5F9;
-  --border: #E2E8F0;
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  --radius: 16px;
-  --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-lg: 0 8px 32px rgba(79,70,229,0.15);
-  --nav-height: 72px;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Bridge: app vars → design system tokens */
+  --primary:       var(--background-dynamic-accent);
+  --primary-light: var(--background-dynamic-accent-hover);
+  --primary-dark:  var(--background-dynamic-accent-pressed);
+  --accent:        var(--foreground-dynamic-info-accent);
+  --success:       var(--foreground-dynamic-positive-accent);
+  --warning:       var(--foreground-dynamic-warning-accent);
+  --danger:        var(--foreground-dynamic-negative-accent);
+  --bg:            var(--background-dynamic-base-gray);
+  --surface:       var(--background-dynamic-elevation-1);
+  --surface-2:     var(--background-dynamic-neutral-1-opaque);
+  --border:        var(--foreground-dynamic-separator);
+  --text-primary:  var(--text-dynamic-primary);
+  --text-secondary:var(--text-dynamic-secondary);
+  --text-muted:    var(--text-dynamic-tertiary);
+  --radius:        var(--radius-16);
+  --radius-sm:     var(--radius-8);
+  --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg:     0 8px 32px rgba(96, 165, 250, 0.20);
+  --nav-height:    72px;
+  --font:          'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 *, *::before, *::after {

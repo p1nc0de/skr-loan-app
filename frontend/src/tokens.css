@@ -1,0 +1,206 @@
+/* ================================================================
+   SKYRO DESIGN SYSTEM — Resolved Tokens
+   Primitives inferred from Tailwind v3 color scale.
+   Base black confirmed as rgb(15,15,15) from fade values in source.
+   ================================================================ */
+
+/* === PRIMITIVES === */
+:root {
+  /* Base */
+  --base-white: #ffffff;
+  --base-black: #0f0f0f;
+
+  /* Neutral (Tailwind neutral) */
+  --neutral-50:  #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+
+  /* Blue (Tailwind blue) */
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-950: #172554;
+
+  /* Green (Tailwind green) */
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+
+  /* Red (Tailwind red) */
+  --red-600: #dc2626;
+
+  /* Amber (Tailwind amber) */
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+
+  /* Lime (Tailwind lime) */
+  --lime-400: #a3e635;
+  --lime-500: #84cc16;
+  --lime-600: #65a30d;
+
+  /* Black transparent  (numeric suffix = opacity ×10, e.g. 50→5%) */
+  --black-transperent-50:  rgba(15, 15, 15, 0.05);
+  --black-transperent-100: rgba(15, 15, 15, 0.10);
+  --black-transperent-200: rgba(15, 15, 15, 0.20);
+  --black-transperent-300: rgba(15, 15, 15, 0.30);
+  --black-transperent-600: rgba(15, 15, 15, 0.60);
+  --black-transperent-950: rgba(15, 15, 15, 0.95);
+
+  /* White transparent */
+  --white-transperent-200: rgba(255, 255, 255, 0.20);
+  --white-transperent-300: rgba(255, 255, 255, 0.30);
+  --white-transperent-400: rgba(255, 255, 255, 0.40);
+  --white-transperent-500: rgba(255, 255, 255, 0.50);
+  --white-transperent-600: rgba(255, 255, 255, 0.60);
+  --white-transperent-700: rgba(255, 255, 255, 0.70);
+  --white-transperent-950: rgba(255, 255, 255, 0.95);
+}
+
+/* === METRICS (px added for direct CSS use) === */
+:root {
+  --spacing-0:  0px;
+  --spacing-2:  2px;
+  --spacing-4:  4px;
+  --spacing-8:  8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+
+  --radius-0:    0px;
+  --radius-2:    2px;
+  --radius-4:    4px;
+  --radius-6:    6px;
+  --radius-8:    8px;
+  --radius-12:   12px;
+  --radius-16:   16px;
+  --radius-20:   20px;
+  --radius-24:   24px;
+  --radius-32:   32px;
+  --radius-full: 9999px;
+}
+
+/* === SEMANTIC TOKENS — LIGHT (default) === */
+:root {
+  /* Backgrounds — dynamic */
+  --background-dynamic-base-ios:           var(--base-white);
+  --background-dynamic-base-android-web:   var(--base-white);
+  --background-dynamic-elevation-1:        var(--base-white);
+  --background-dynamic-elevation-2:        var(--base-white);
+  --background-dynamic-elevation-3:        var(--base-white);
+  --background-dynamic-opposite:           var(--base-black);
+  --background-dynamic-neutral-1:          var(--black-transperent-50);
+  --background-dynamic-neutral-2:          var(--black-transperent-100);
+  --background-dynamic-neutral-3:          var(--black-transperent-200);
+  --background-dynamic-neutral-4:          var(--black-transperent-300);
+  --background-dynamic-neutral-1-opaque:   var(--neutral-100);
+  --background-dynamic-highlight:          var(--black-transperent-200);
+  --background-dynamic-warning:            rgba(252, 211, 77, 0.20);
+  --background-dynamic-positive:           rgba(22, 163, 74, 0.13);
+  --background-dynamic-negative:           rgba(220, 38, 38, 0.20);
+  --background-dynamic-info:              rgba(91, 166, 253, 0.20);
+  --background-dynamic-accent:             var(--blue-400);
+  --background-dynamic-accent-hover:       var(--blue-500);
+  --background-dynamic-accent-pressed:     var(--blue-600);
+  --background-dynamic-notification:       var(--red-600);
+  --background-dynamic-base-gray:          var(--neutral-50);
+  --background-dynamic-appbar-bg-ksa:      var(--blue-400);
+
+  /* Backgrounds — static */
+  --background-static-neutral-1-on-light:  var(--black-transperent-50);
+  --background-static-neutral-2-on-light:  var(--black-transperent-100);
+  --background-static-neutral-3-on-light:  var(--black-transperent-200);
+  --background-static-neutral-4-on-light:  var(--black-transperent-300);
+  --background-static-neutral-6-on-light:  var(--black-transperent-600);
+  --background-static-neutral-1-on-dark:   var(--white-transperent-200);
+  --background-static-neutral-2-on-dark:   var(--white-transperent-300);
+  --background-static-neutral-3-on-dark:   var(--white-transperent-400);
+  --background-static-neutral-4-on-dark:   var(--white-transperent-500);
+  --background-static-neutral-6-on-dark:   var(--white-transperent-600);
+  --background-static-highlight-on-light:  var(--black-transperent-200);
+  --background-static-highlight-on-dark:   var(--white-transperent-200);
+  --background-static-primary-on-light:    var(--black-transperent-950);
+  --background-static-primary-on-dark:     var(--base-white);
+  --background-static-featured-lime:       var(--lime-400);
+  --background-static-featured-hover:      var(--lime-500);
+  --background-static-featured-pressed:    var(--lime-600);
+
+  /* Text */
+  --text-dynamic-primary:           var(--black-transperent-950);
+  --text-dynamic-secondary:         var(--black-transperent-600);
+  --text-dynamic-tertiary:          var(--black-transperent-300);
+  --text-dynamic-accent:            var(--blue-400);
+  --text-dynamic-accent-pressed:    var(--blue-500);
+  --text-dynamic-positive:          var(--green-600);
+  --text-dynamic-negative:          var(--red-600);
+  --text-dynamic-warning:           var(--amber-500);
+  --text-dynamic-primary-on-opposite: var(--base-white);
+  --text-dynamic-primary-fade:      rgba(15, 15, 15, 0.00);
+  --text-dynamic-secondary-fade:    rgba(15, 15, 15, 0.00);
+  --text-static-primary-on-dark:    var(--base-white);
+  --text-static-secondary-on-dark:  var(--white-transperent-700);
+  --text-static-primary-on-light:   var(--black-transperent-950);
+  --text-static-secondary-on-light: var(--black-transperent-600);
+
+  /* Foreground */
+  --foreground-dynamic-neutral-accent:   var(--black-transperent-600);
+  --foreground-dynamic-positive-accent:  var(--green-600);
+  --foreground-dynamic-warning-accent:   var(--amber-400);
+  --foreground-dynamic-negative-accent:  var(--red-600);
+  --foreground-dynamic-info-accent:      var(--blue-400);
+  --foreground-dynamic-skeleton:         var(--black-transperent-50);
+  --foreground-dynamic-separator:        var(--black-transperent-200);
+}
+
+/* === SEMANTIC TOKENS — DARK === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-dynamic-base-ios:          #000000;
+    --background-dynamic-base-android-web:  var(--base-black);
+    --background-dynamic-elevation-1:       var(--neutral-900);
+    --background-dynamic-elevation-2:       var(--neutral-800);
+    --background-dynamic-elevation-3:       var(--neutral-700);
+    --background-dynamic-opposite:          var(--base-white);
+    --background-dynamic-neutral-1:         var(--white-transperent-200);
+    --background-dynamic-neutral-2:         var(--white-transperent-300);
+    --background-dynamic-neutral-3:         var(--white-transperent-400);
+    --background-dynamic-neutral-4:         var(--white-transperent-500);
+    --background-dynamic-neutral-1-opaque:  var(--neutral-800);
+    --background-dynamic-highlight:         var(--white-transperent-200);
+    --background-dynamic-warning:           rgba(252, 211, 77, 0.25);
+    --background-dynamic-positive:          rgba(22, 163, 74, 0.32);
+    --background-dynamic-negative:          rgba(220, 38, 38, 0.30);
+    --background-dynamic-info:             rgba(91, 166, 253, 0.24);
+    --background-dynamic-accent:            var(--blue-400);
+    --background-dynamic-accent-hover:      var(--blue-500);
+    --background-dynamic-accent-pressed:    var(--blue-600);
+    --background-dynamic-notification:      var(--red-600);
+    --background-dynamic-base-gray:         var(--base-black);
+    --background-dynamic-appbar-bg-ksa:     var(--blue-950);
+
+    --text-dynamic-primary:           var(--white-transperent-950);
+    --text-dynamic-secondary:         var(--white-transperent-600);
+    --text-dynamic-tertiary:          var(--white-transperent-400);
+    --text-dynamic-accent:            var(--blue-400);
+    --text-dynamic-accent-pressed:    var(--blue-500);
+    --text-dynamic-positive:          var(--green-500);
+    --text-dynamic-negative:          var(--red-600);
+    --text-dynamic-warning:           var(--amber-400);
+    --text-dynamic-primary-on-opposite: var(--base-black);
+    --text-dynamic-primary-fade:      rgba(255, 255, 255, 0.00);
+    --text-dynamic-secondary-fade:    rgba(255, 255, 255, 0.00);
+
+    --foreground-dynamic-neutral-accent:  var(--white-transperent-600);
+    --foreground-dynamic-positive-accent: var(--green-600);
+    --foreground-dynamic-warning-accent:  var(--amber-400);
+    --foreground-dynamic-negative-accent: var(--red-600);
+    --foreground-dynamic-info-accent:     var(--blue-400);
+    --foreground-dynamic-skeleton:        var(--white-transperent-200);
+    --foreground-dynamic-separator:       var(--white-transperent-400);
+  }
+}
