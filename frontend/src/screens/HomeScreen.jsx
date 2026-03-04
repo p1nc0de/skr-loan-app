@@ -42,11 +42,13 @@ export default function HomeScreen() {
         <div className="credit-card">
           {/* Available — hero number */}
           <div style={{ marginBottom: 24 }}>
-            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '1px' }}>Available</p>
-            <p style={{ fontSize: 48, fontWeight: 800, marginTop: 4, letterSpacing: '-1.5px', lineHeight: 1.1 }}>
-              <span style={{ fontSize: 20, fontWeight: 600, opacity: 0.8, marginRight: 4 }}>MYR</span>
-              {fmtMYR(data.available_cents)}
-            </p>
+            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 2 }}>Available</p>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+              <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.75, marginTop: 10, lineHeight: 1 }}>MYR</span>
+              <span style={{ fontSize: 52, fontWeight: 800, letterSpacing: '-2px', lineHeight: 1 }}>
+                {fmtMYR(data.available_cents)}
+              </span>
+            </div>
           </div>
 
           {/* Outstanding row */}
@@ -77,48 +79,31 @@ export default function HomeScreen() {
         </div>
       )}
 
-      {/* Refuel CTA */}
-      <div style={{ padding: '16px 20px 8px' }}>
+      {/* Actions */}
+      <div style={{ padding: '12px 20px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {/* Refuel — primary CTA */}
         <button
           onClick={() => navigate('/refuel')}
           style={{
             width: '100%',
-            background: 'var(--primary)',
+            background: 'var(--text-primary)',
             border: 'none',
-            borderRadius: 16,
-            padding: '18px 24px',
+            borderRadius: 14,
+            padding: '16px 20px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             cursor: 'pointer',
-            boxShadow: '0 4px 20px rgba(96,165,250,0.35)',
-            transition: 'transform 0.15s, box-shadow 0.15s',
+            transition: 'opacity 0.15s',
           }}
-          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.98)'}
-          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+          onMouseDown={e => e.currentTarget.style.opacity = '0.85'}
+          onMouseUp={e => e.currentTarget.style.opacity = '1'}
         >
-          <div style={{ textAlign: 'left' }}>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 4 }}>
-              Available for top-up
-            </p>
-            <p style={{ color: 'white', fontSize: 24, fontWeight: 800, letterSpacing: '-0.5px' }}>
-              MYR {fmtMYR(data.available_cents)}
-            </p>
-          </div>
-          <div style={{
-            width: 48, height: 48,
-            background: 'rgba(255,255,255,0.2)',
-            borderRadius: 12,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 24,
-          }}>
-            ⚡
-          </div>
+          <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
+          <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
         </button>
-      </div>
 
-      {/* Secondary actions */}
-      <div style={{ padding: '8px 20px' }}>
+        {/* Pay + Statements */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <button className="quick-action" onClick={() => navigate('/payment')}>
             <div className="quick-action-icon" style={{ background: '#F0FDF4' }}>💳</div>
