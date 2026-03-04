@@ -33,9 +33,10 @@ export default function RefuelScreen() {
   if (loading) return <div className="screen"><LoadingSpinner /></div>;
   if (!account) return <div className="screen"><div className="p-20 text-secondary">Failed to load.</div></div>;
 
-  const grossCents = account.approved_limit_cents - account.available_cents;
-  const feeCents = Math.round(grossCents * ORIGINATION_FEE_PCT);
-  const netCents = grossCents - feeCents;
+  // Gross inflated so net disbursed = outstanding exactly
+  const outstandingCents = account.approved_limit_cents - account.available_cents;
+  const grossCents = Math.ceil(outstandingCents / (1 - ORIGINATION_FEE_PCT));
+  const netCents = grossCents - Math.round(grossCents * ORIGINATION_FEE_PCT);
   const monthlyPaymentCents = calcMonthlyPayment(grossCents, APR_BPS, TERM_MONTHS);
 
   const handleConfirm = async () => {
@@ -65,36 +66,13 @@ export default function RefuelScreen() {
       </div>
 
       <div style={{ padding: '0 20px' }}>
-        {/* Breakdown */}
-        <div className="card">
-          <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Loan Summary
+        {/* Net to Wallet */}
+        <div className="card" style={{ textAlign: 'center', padding: '28px 20px' }}>
+          <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>Net to Wallet</p>
+          <p style={{ fontSize: 44, fontWeight: 800, color: 'var(--success)', letterSpacing: '-1px' }}>
+            <span style={{ fontSize: 18, fontWeight: 600, opacity: 0.7, marginRight: 4 }}>MYR</span>
+            {fmtMYR(netCents)}
           </p>
-
-          <div className="list-row">
-            <span className="text-sm text-secondary">Gross Amount</span>
-            <span className="font-semibold text-sm">MYR {fmtMYR(grossCents)}</span>
-          </div>
-          <div className="list-row">
-            <span className="text-sm text-secondary">Origination Fee (2%)</span>
-            <span className="font-semibold text-sm" style={{ color: 'var(--danger)' }}>− MYR {fmtMYR(feeCents)}</span>
-          </div>
-          <div className="list-row" style={{ borderBottom: '2px solid var(--border)' }}>
-            <span className="text-sm text-secondary">Net to Wallet</span>
-            <span className="font-bold" style={{ color: 'var(--success)', fontSize: 16 }}>MYR {fmtMYR(netCents)}</span>
-          </div>
-
-          <div style={{ marginTop: 12, background: 'var(--surface-2)', borderRadius: 10, padding: '14px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <p className="text-sm text-secondary font-semibold">Monthly Payment</p>
-                <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>18% APR · {TERM_MONTHS} months</p>
-              </div>
-              <p style={{ fontSize: 22, fontWeight: 800, color: 'var(--primary)' }}>
-                MYR {fmtMYR(monthlyPaymentCents)}
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* E-sign */}
