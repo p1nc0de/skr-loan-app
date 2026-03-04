@@ -19,8 +19,6 @@ export default function HomeScreen() {
   if (loading) return <div className="screen"><LoadingSpinner /></div>;
   if (!data) return <div className="screen"><div className="p-20 text-secondary">Failed to load account.</div></div>;
 
-  const utilPct = Math.round((data.outstanding_cents / data.approved_limit_cents) * 100);
-
   return (
     <div className="screen">
       {/* Header */}
@@ -42,40 +40,19 @@ export default function HomeScreen() {
       {/* Credit Card */}
       <div style={{ padding: '16px 20px' }}>
         <div className="credit-card">
-          <div style={{ marginBottom: 20 }}>
-            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.7, textTransform: 'uppercase', letterSpacing: '1px' }}>Skyro Credit Line</p>
-            <p style={{ fontSize: 28, fontWeight: 800, marginTop: 4, letterSpacing: '-0.5px' }}>
-              MYR {fmtMYR(data.approved_limit_cents)}
+          {/* Available — hero number */}
+          <div style={{ marginBottom: 24 }}>
+            <p style={{ fontSize: 11, fontWeight: 600, opacity: 0.65, textTransform: 'uppercase', letterSpacing: '1px' }}>Available</p>
+            <p style={{ fontSize: 48, fontWeight: 800, marginTop: 4, letterSpacing: '-1.5px', lineHeight: 1.1 }}>
+              <span style={{ fontSize: 20, fontWeight: 600, opacity: 0.8, marginRight: 4 }}>MYR</span>
+              {fmtMYR(data.available_cents)}
             </p>
-            <p style={{ fontSize: 12, opacity: 0.7, marginTop: 2 }}>Approved Limit</p>
           </div>
 
-          {/* Utilization bar */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-              <span style={{ fontSize: 11, opacity: 0.7 }}>Utilization</span>
-              <span style={{ fontSize: 11, fontWeight: 700 }}>{utilPct}%</span>
-            </div>
-            <div style={{ height: 6, background: 'rgba(255,255,255,0.25)', borderRadius: 3 }}>
-              <div style={{
-                height: '100%',
-                width: `${Math.min(utilPct, 100)}%`,
-                background: utilPct > 80 ? '#FCA5A5' : 'white',
-                borderRadius: 3,
-                transition: 'width 0.5s',
-              }} />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-            <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '12px' }}>
-              <p style={{ fontSize: 10, opacity: 0.7, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Outstanding</p>
-              <p style={{ fontSize: 18, fontWeight: 700, marginTop: 4 }}>MYR {fmtMYR(data.outstanding_cents)}</p>
-            </div>
-            <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '12px' }}>
-              <p style={{ fontSize: 10, opacity: 0.7, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Available</p>
-              <p style={{ fontSize: 18, fontWeight: 700, marginTop: 4 }}>MYR {fmtMYR(data.available_cents)}</p>
-            </div>
+          {/* Outstanding row */}
+          <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{ fontSize: 11, opacity: 0.7, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Outstanding</p>
+            <p style={{ fontSize: 16, fontWeight: 700 }}>MYR {fmtMYR(data.outstanding_cents)}</p>
           </div>
         </div>
       </div>
@@ -100,14 +77,49 @@ export default function HomeScreen() {
         </div>
       )}
 
-      {/* Quick Actions */}
-      <div style={{ padding: '16px 20px' }}>
-        <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</p>
-        <div className="quick-actions">
-          <button className="quick-action" onClick={() => navigate('/refuel')}>
-            <div className="quick-action-icon" style={{ background: '#EEF2FF' }}>⚡</div>
-            <span>Refuel</span>
-          </button>
+      {/* Refuel CTA */}
+      <div style={{ padding: '16px 20px 8px' }}>
+        <button
+          onClick={() => navigate('/refuel')}
+          style={{
+            width: '100%',
+            background: 'var(--primary)',
+            border: 'none',
+            borderRadius: 16,
+            padding: '18px 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            boxShadow: '0 4px 20px rgba(96,165,250,0.35)',
+            transition: 'transform 0.15s, box-shadow 0.15s',
+          }}
+          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.98)'}
+          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 4 }}>
+              Available for top-up
+            </p>
+            <p style={{ color: 'white', fontSize: 24, fontWeight: 800, letterSpacing: '-0.5px' }}>
+              MYR {fmtMYR(data.available_cents)}
+            </p>
+          </div>
+          <div style={{
+            width: 48, height: 48,
+            background: 'rgba(255,255,255,0.2)',
+            borderRadius: 12,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 24,
+          }}>
+            ⚡
+          </div>
+        </button>
+      </div>
+
+      {/* Secondary actions */}
+      <div style={{ padding: '8px 20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <button className="quick-action" onClick={() => navigate('/payment')}>
             <div className="quick-action-icon" style={{ background: '#F0FDF4' }}>💳</div>
             <span>Pay</span>
