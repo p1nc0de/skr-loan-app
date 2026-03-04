@@ -119,7 +119,7 @@ export default function HomeScreen() {
         >
           <span style={{ color: 'var(--bg)', fontSize: 17, fontWeight: 700 }}>⚡ Refuel Now</span>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(data.available_cents)}</span>
+            <span style={{ color: 'var(--bg)', fontSize: 12, opacity: 0.6, fontWeight: 600 }}>up to MYR {fmtMYR(data.approved_limit_cents - data.available_cents)}</span>
             <span style={{ color: 'var(--bg)', fontSize: 17, opacity: 0.5 }}>→</span>
           </div>
         </button>
